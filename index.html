@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta name="google-site-verification" content="ftFOlJETX-2KNjaPh8W6s8lhigItRuu9fOmjHZZ0nY0" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <title>Discrete Unit Based Masking for Improving Disentanglement in Voice Conversion</title>
+</head>
+<style type="text/css">
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  audio {
+    width: 100%;
+  }
+
+  thead>tr>th:first-child {
+    width: 96px;
+  }
+
+  @media (max-width: 767px) {
+    .big-screen {
+      display: none;
+    }
+  }
+
+  @media (min-width: 767px) {
+    .small-screen {
+      display: none;
+    }
+  }
+  .column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+</style>
+
+<body>
+  <header class="header">
+    <div class="jumbotron bg-secondary text-center">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <h1><a class="text-light">Discrete Unit Based Masking for Improving<br>
+              Disentanglement in Voice Conversion </h1><br>
+             <font size=5><span style="color:#FFFFFF"> Anonymous submission to Spoken Language Technology Workshop 2024 </font>   </a>  
+              
+            <p>
+              <div class="row">
+              </div>
+            </p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+   <p style="padding-left: 20px;"> <b> Abstract: </b> Voice conversion (VC) aims to modify the speaker's identity while preserving the linguistic content. Commonly, VC methods use an encoder-decoder architecture, where disentangling the speaker's identity from linguistic information is crucial. However, the disentanglement approaches used in these methods are limited as the speaker features depend on the phonetic content of the utterance, compromising disentanglement. This dependency is amplified with attention-based methods. To address this, we introduce a novel masking mechanism in the input before speaker encoding, masking certain discrete speech units that correspond highly with phoneme classes. Our work aims to reduce the phonetic dependency of speaker features by restricting access to some phonetic information. Furthermore, since our approach is at the input level, it is applicable to any encoder-decoder based VC framework. Our approach improves disentanglement and conversion performance across multiple VC methods, showing significant effectiveness, particularly in attention-based method, with 44% relative improvement in objective intelligibility.
+   </p>
+
+    <div class="container">
+      <div class="row" id="arch">
+        <div class="col-md-12">
+          <h2>---------> Discrete Unit Based Time Masking For Voice Conversion <----------</h2>
+          <br />
+          <div class="column" style="padding-right:80px;">
+                    <img src="./figure1.png"  width="350" height="200" / > <p>
+                      <figcaption style="text-align:left;"></font><font size=3> 
+                        Figure 1: Standard encoder-decoder based VC training vs VC training with the proposed masking approach</font>
+                      </figcaption><br>
+                    </div>
+                    <div class="column", style="padding-left:80px;">
+                        <img src="./figure2.png"  width="550" height="200" / > <p>
+                          <figcaption style="text-align:center;position: absolute;"></font><font size=3> 
+                            Figure 2: Proposed training for Encoder-Decoder based VC Frameworks</font>
+                          </figcaption><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="result">
+                    <div class="col-md-12">
+                  <div class="big-screen">
+                    
+                     <h2>----------------------------->   Speech Samples  <---------------------------</h2>
+
+                     </thead> <b>Experimental Setup:</b><p>
+                        <h6> The samples are from speakers that are unseen during the VC training. For each conversion, a random reference utterance from target speaker(~3s) is used </h6>
+                    <h6> <b>Methods:</b> 
+                        <ul>
+                            <li>VC with baseline TriAAN-VC [1] and VQMIVC [2]</li>
+                            <li>TriAAN-VC Discrete Unit Based Time Masking: 10 percent and 20 percent (proposed)</li>
+                            <li>VQMIVC Discrete Based Unit Time Masking: 10 perent (proposed) and 20 percent</li>
+                          </ul>
+                       </h6>
+
+                       <br>
+                    <h2 style="text-decoration: underline;">TriAAN-VC</h2>
+                      <table class="table">
+                        <tr>
+                          <th></th>
+                          <th style="text-align:center;">   TriAAN-VC Ground Truth</th>
+                          <th style="text-align:center;">   TriAAN-VC Baseline</th>
+                          <th style="text-align:center;">   TriAAN-VC /w Discrete Unit Based Time Masking (10%)</th>
+                          <th style="text-align:center;">   TriAAN-VC /w Proposed Discrete Unit Based Time Masking (20%)</th>                        
+                        </tr>
+                      <tbody>
+      
+		 <!-- single sentence -->
+                                                                  </tr>
+                                   <th colspan=5><h4> Female-to-Female</h4></th>         
+                               </tr>
+
+                                <tr>
+                                  <th scope="row">    </th>
+                                  <td style="display: flex; align-items: center;"> 
+                                    <span style="margin-right: 10px;"> <b>Source:</b> p343</span>
+                                    <audio controls>
+                                      <source src="./samples/TriAAN-VC/f-f/source1.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                
+                                  <td style="display: flex; align-items: center;"> 
+                                    <span style="margin-right: 10px;"> <b>Target:</b> p249</span>
+                                    <audio controls>
+                                      <source src="./samples/TriAAN-VC/f-f/target1.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="./samples/TriAAN-VC/f-f/base1.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="./samples/TriAAN-VC/f-f/hub10-1.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="./samples/TriAAN-VC/f-f/hub20-1.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                                                  <!-- single sentence -->
+
+                                                                  <tr>
+                                  <th scope="row">    </th>
+                                  <td style="display: flex; align-items: center;"> 
+                                    <span style="margin-right: 10px;"><b>Source:</b> p277</span>
+                                    <audio controls>
+                                      <source src="./samples/TriAAN-VC/f-f/source2.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+
+                                  <td style="display: flex; align-items: center;"> 
+                                    <span style="margin-right: 10px;"><b>Target:</b> p249</span>
+                                    <audio controls>
+                                      <source src="./samples/TriAAN-VC/f-f/target2.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="./samples/TriAAN-VC/f-f/base2.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="./samples/TriAAN-VC/f-f/hub10-2.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="./samples/TriAAN-VC/f-f/hub20-2.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                </tr>
+
+                                                                  <!-- single sentence -->
+
+                              
+                                                                                                 </tr>
+                                  <th colspan=5><h4> Female-to-Male</h4></th>
+                               </tr>
+                                <!-- single sentence -->
+  
+                                  <tr>
+                                    <th scope="row">    </th>
+                                    <td style="display: flex; align-items: center;"> 
+                                      <span style="margin-right: 10px;"> <b>Source:</b> p277</span>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/f-m/source1.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                  
+                                    <td style="display: flex; align-items: center;"> 
+                                      <span style="margin-right: 10px;"> <b>Target:</b> p271</span>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/f-m/target1.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/f-m/base1.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/f-m/hub10-1.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/f-m/hub20-1.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+  
+                                                                    <!-- single sentence -->
+  
+                                                                    <tr>
+                                    <th scope="row">    </th>
+                                    <td style="display: flex; align-items: center;"> 
+                                      <span style="margin-right: 10px;"><b>Source:</b> p343</span>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/f-m/source2.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+  
+                                    <td style="display: flex; align-items: center;"> 
+                                      <span style="margin-right: 10px;"><b>Target:</b> p271</span>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/f-m/target2.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/f-m/base2.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/f-m/hub10-2.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/f-m/hub20-2.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                  </tr>
+                                                                  <!-- single sentence -->
+
+                                
+		                                                                                                 </tr>
+                                  <th colspan=5><h4> Male-to-Female</h4></th>
+                              </tr>
+                                <!-- single sentence -->
+                                  <tr>
+                                    <th scope="row">    </th>
+                                    <td style="display: flex; align-items: center;"> 
+                                      <span style="margin-right: 10px;"> <b>Source:</b> p271</span>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/m-f/source1.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                  
+                                    <td style="display: flex; align-items: center;"> 
+                                      <span style="margin-right: 10px;"> <b>Target:</b> p282</span>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/m-f/target1.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/m-f/base1.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/m-f/hub10-1.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/m-f/hub20-1.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+  
+                                                                  <!-- single sentence -->
+  
+                                                                    <tr>
+                                    <th scope="row">    </th>
+                                    <td style="display: flex; align-items: center;"> 
+                                      <span style="margin-right: 10px;"><b>Source:</b> p277</span>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/m-f/source2.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+  
+                                    <td style="display: flex; align-items: center;"> 
+                                      <span style="margin-right: 10px;"><b>Target:</b> p282</span>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/m-f/target2.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/m-f/base2.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/m-f/hub10-2.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                    <td>
+                                      <audio controls>
+                                        <source src="./samples/TriAAN-VC/m-f/hub20-2.wav" type="audio/wav" />
+                                        Your browser does not support the audio element.
+                                      </audio>
+                                    </td>
+                                  </tr>
+                                                                  <!-- single sentence -->
+
+                               
+                                </tr>
+                                <th colspan=5><h4> Male-to-Male</h4></th>
+                               <tr>
+                                 <th scope="row">    </th>
+                                 <td style="display: flex; align-items: center;"> 
+                                   <span style="margin-right: 10px;"> <b>Source:</b> p245</span>
+                                   <audio controls>
+                                     <source src="./samples/TriAAN-VC/m-m/source1.wav" type="audio/wav" />
+                                     Your browser does not support the audio element.
+                                   </audio>
+                                 </td>
+                               
+                                 <td style="display: flex; align-items: center;"> 
+                                   <span style="margin-right: 10px;"> <b>Target:</b> p285</span>
+                                   <audio controls>
+                                     <source src="./samples/TriAAN-VC/m-m/target1.wav" type="audio/wav" />
+                                     Your browser does not support the audio element.
+                                   </audio>
+                                 </td>
+                                 <td>
+                                   <audio controls>
+                                     <source src="./samples/TriAAN-VC/m-m/base1.wav" type="audio/wav" />
+                                     Your browser does not support the audio element.
+                                   </audio>
+                                 </td>
+                                 <td>
+                                   <audio controls>
+                                     <source src="./samples/TriAAN-VC/m-m/hub10-1.wav" type="audio/wav" />
+                                     Your browser does not support the audio element.
+                                   </audio>
+                                 </td>
+                                 <td>
+                                   <audio controls>
+                                     <source src="./samples/TriAAN-VC/m-m/hub20-1.wav" type="audio/wav" />
+                                     Your browser does not support the audio element.
+                                   </audio>
+                                 </td>
+
+                                                                 <!-- single sentence -->
+
+                                                                 <tr>
+                                 <th scope="row">    </th>
+                                 <td style="display: flex; align-items: center;"> 
+                                   <span style="margin-right: 10px;"><b>Source:</b> p271</span>
+                                   <audio controls>
+                                     <source src="./samples/TriAAN-VC/m-m/source2.wav" type="audio/wav" />
+                                     Your browser does not support the audio element.
+                                   </audio>
+                                 </td>
+
+                                 <td style="display: flex; align-items: center;"> 
+                                   <span style="margin-right: 10px;"><b>Target:</b> p285</span>
+                                   <audio controls>
+                                     <source src="./samples/TriAAN-VC/m-m/target2.wav" type="audio/wav" />
+                                     Your browser does not support the audio element.
+                                   </audio>
+                                 </td>
+                                 <td>
+                                   <audio controls>
+                                     <source src="./samples/TriAAN-VC/m-m/base2.wav" type="audio/wav" />
+                                     Your browser does not support the audio element.
+                                   </audio>
+                                 </td>
+                                 <td>
+                                   <audio controls>
+                                     <source src="./samples/TriAAN-VC/m-m/hub10-2.wav" type="audio/wav" />
+                                     Your browser does not support the audio element.
+                                   </audio>
+                                 </td>
+                                 <td>
+                                   <audio controls>
+                                     <source src="./samples/TriAAN-VC/m-m/hub20-2.wav" type="audio/wav" />
+                                     Your browser does not support the audio element.
+                                   </audio>
+                                 </td>
+                               </tr>
+                      </tbody>
+                    </table>
+                     
+
+                    <br><br><br>
+                    <h2 style="text-decoration: underline;">VQMIVC</h2>
+                      <table class="table">
+                        <tr>
+                          <th></th>
+                          <th style="text-align:center;">   VQMIVC Ground Truth</th>
+                          <th style="text-align:center;">   VQMIVC Baseline</th>
+                          <th style="text-align:center;">   VQMIVC /w Proposed Discrete Unit Based Time Masking (10%)</th>
+                          <th style="text-align:center;">   VQMIVC /w Discrete Unit Based Time Masking (20%)</th>                       
+                        </tr>
+                      <tbody>
+      
+                    </tr><th colspan=5><h4> Female-to-Female</h4></th></tr>
+
+                    <tr>
+                      <th scope="row">    </th>
+                      <td style="display: flex; align-items: center;"> 
+                        <span style="margin-right: 10px;"><b>Source:</b> p330</span>
+                        <audio controls>
+                          <source src="./samples/VQMIVC/f-f/source.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </td>
+
+                      <td style="display: flex; align-items: center;"> 
+                        <span style="margin-right: 10px;"><b>Target:</b> p240</span>
+                        <audio controls>
+                          <source src="./samples/VQMIVC/f-f/target.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </td>
+                      <td>
+                        <audio controls>
+                          <source src="./samples/VQMIVC/f-f/base.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </td>
+                      <td>
+                        <audio controls>
+                          <source src="./samples/VQMIVC/f-f/hub10.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </td>
+                      <td>
+                        <audio controls>
+                          <source src="./samples/VQMIVC/f-f/hub20.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </td>
+                    </tr>
+
+
+                    <th colspan=5><h4> Male-to-Female </h4></th>
+                    <tr>
+                      <th scope="row">    </th>
+                      <td style="display: flex; align-items: center;"> 
+                        <span style="margin-right: 10px;"><b>Source:</b> p336</span>
+                        <audio controls>
+                          <source src="./samples/VQMIVC/f-m/source.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </td>
+
+                      <td style="display: flex; align-items: center;"> 
+                        <span style="margin-right: 10px;"><b>Target:</b> p228</span>
+                        <audio controls>
+                          <source src="./samples/VQMIVC/f-m/target.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </td>
+                      <td>
+                        <audio controls>
+                          <source src="./samples/VQMIVC/f-m/base.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </td>
+                      <td>
+                        <audio controls>
+                          <source src="./samples/VQMIVC/f-m/hub10.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </td>
+                      <td>
+                        <audio controls>
+                          <source src="./samples/VQMIVC/f-m/hub20.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </td>
+                    </tr>
+
+                    
+                    <th colspan=5><h4> Female-to-Male</h4></th>
+                        <tr>
+                          <th scope="row">    </th>
+                          <td style="display: flex; align-items: center;"> 
+                            <span style="margin-right: 10px;"><b>Source:</b> p247</span>
+                            <audio controls>
+                              <source src="./samples/VQMIVC/f-m/source.wav" type="audio/wav" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </td>
+    
+                          <td style="display: flex; align-items: center;"> 
+                            <span style="margin-right: 10px;"><b>Target:</b> p267 </span>
+                            <audio controls>
+                              <source src="./samples/VQMIVC/f-m/target.wav" type="audio/wav" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </td>
+                          <td>
+                            <audio controls>
+                              <source src="./samples/VQMIVC/f-m/base.wav" type="audio/wav" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </td>
+                          <td>
+                            <audio controls>
+                              <source src="./samples/VQMIVC/f-m/hub10.wav" type="audio/wav" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </td>
+                          <td>
+                            <audio controls>
+                              <source src="./samples/VQMIVC/f-m/hub20.wav" type="audio/wav" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </td>
+                        </tr>
+                      
+                      <th colspan=5><h4> Male-to-Male</h4></th>
+                        <tr>
+                          <th scope="row">    </th>
+                          <td style="display: flex; align-items: center;"> 
+                            <span style="margin-right: 10px;"><b>Source:</b> p287</span>
+                            <audio controls>
+                              <source src="./samples/VQMIVC/m-m/source.wav" type="audio/wav" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </td>
+    
+                          <td style="display: flex; align-items: center;"> 
+                            <span style="margin-right: 10px;"><b>Target:</b> p311 </span>
+                            <audio controls>
+                              <source src="./samples/VQMIVC/m-m/target.wav" type="audio/wav" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </td>
+                          <td>
+                            <audio controls>
+                              <source src="./samples/VQMIVC/m-m/base.wav" type="audio/wav" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </td>
+                          <td>
+                            <audio controls>
+                              <source src="./samples/VQMIVC/m-m/hub10.wav" type="audio/wav" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </td>
+                          <td>
+                            <audio controls>
+                              <source src="./samples/VQMIVC/m-m/hub20.wav" type="audio/wav" />
+                              Your browser does not support the audio element.
+                            </audio>
+                          </td>
+                        </tbody>
+                       
+
+                    
+
+
+                        <tr></tr>
+                            </table>
+                          </div>
+                          
+     </div>
+    
+     <div style="padding-left: 20px;">
+      [1] Hyun Joon Park, Seok Woo Yang, Jin Sob Kim, Wooseok Shin, and Sung Won Han, “Triaan-vc: Triple adaptive attention normalization for any-to-any voice conversion,” ICASSP 2023 - 2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), pp. 1-5, 2023.
+      <br>
+      [2] Disong Wang, Liqun Deng, Yu Ting Yeung, Xiao Chen, Xunying Liu, and Helen Meng, “VQMIVC: Vector Quantization and Mutual Information-Based Unsupervised Speech Representation Disentanglement for One-Shot Voice Conversion,” in Proc. Interspeech 2021, 2021, pp. 1344-1348.
+    </div>
+    
+
+
+
+
+</div>
+                 
+        </div>
+      </div>
+      <hr>
+      <div class="row" id="ref">
+        <div class="col">
+          <!--<h2>References</h2>
+          
+         -->
+        </div>
+      </div>
+      <hr>
+      <!-- <div class="row" id="contact">
+          <div class="col">
+            <h2>Contact</h2>
+            <div></div>
+          </div>
+        </div> -->
+    </div>
+  </main>
+  <footer class="bg-secondary text-light mt-4 pt-3 pb-2 ">
+    <div class="container">
+      <p class="text-center">
+        
+      </p>
+    </div>
+  </footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
